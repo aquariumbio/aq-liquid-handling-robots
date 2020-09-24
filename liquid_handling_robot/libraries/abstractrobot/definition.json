@@ -1,0 +1,7 @@
+{
+  "id": 58,
+  "name": "AbstractRobot",
+  "parent_class": "Library",
+  "category": "Liquid Handling Robot",
+  "user_id": 1
+}
