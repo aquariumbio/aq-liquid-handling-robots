@@ -99,6 +99,16 @@ class AbstractRobot
     end
   end
 
+  # Instructions to follow robots onboard instructions
+  #
+  def follow_template_instructions
+    robo_name = model_and_name
+    protocol.show do
+      title 'Follow Machine Instructions'
+      note "Follow the the instructions on #{robo_name}"
+    end
+  end
+
   # Instructions for starting the run
   #
   # @return [String]
