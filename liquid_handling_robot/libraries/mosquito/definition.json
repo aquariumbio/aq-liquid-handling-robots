@@ -1,5 +1,5 @@
 {
-  "name": "AbstractRobot",
+  "name": "Mosquito",
   "parent_class": "Library",
   "category": "Liquid Handling Robot",
   "user_id": 1

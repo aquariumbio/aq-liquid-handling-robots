@@ -56,8 +56,8 @@ class TestLiquidHandlingRobot < AbstractRobot
       template_name
     end
   end
-  
+
   def format_show_array(ary)
-      ary.join('<br>')
+    ary.join('<br>')
   end
 end

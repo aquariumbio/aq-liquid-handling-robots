@@ -19,13 +19,16 @@ end
 
 
 class LiquidRobotProgram
-  attr_reader :name, :program_template_name, :run_file_path, :export
+  attr_reader :name, :program_template_name, :run_file_path, :export, :program_template_image
 
   def initialize(program:, name:)
     @program_template_name = program[:program_template_name]
+    @program_template_image = program[:program_image]
     @run_file_path = program[:run_file_path]
     @export = program[:export]
     @name = name
+    @protocol_image_name = program[:protocol_image_name]
+    @params = program[:params]
   end
 
 end

@@ -42,15 +42,17 @@ class AbstractRobot
   # These methods are not very specific and will probably need to be overridden
   #   in the concrete classes.
 
+  # Instructions to move to robot
+  #
+  # @return [String]
+  def move_to_robot
+    "Please move to <b>#{model_and_name}</b> liquid handling robot"
+  end
   # Instructions for turning on the thermocycler
   #
   # @return [String]
   def turn_on
-    robo_name = model_and_name
-    protocol.show do
-      title 'Turn on Robot'
-      note "Turn on the liquid handling robot <b>#{robo_name}</b>"
-    end
+    "Turn on the <b>#{model_and_name}</b> robot"
   end
 
   # Instructions for placing a plate in the instrument
@@ -58,11 +60,7 @@ class AbstractRobot
   # @param plate [Collection]
   # @return [String]
   def place_item(item:)
-    robo_name = model_and_name
-    protocol.show do
-      title 'Place Items on Robot'
-      note "Place item #{item} in the <b>#{robo_name}</b>"
-    end
+    "Place item <b>#{item}</b> in the <b>#{model_and_name}</b>"
   end
 
   # Instructions for removing a plate in the instrument
@@ -70,21 +68,14 @@ class AbstractRobot
   # @param plate [Collection]
   # @return [String]
   def remove_item(item:)
-    robo_name = model_and_name
-    protocol.show do
-      title 'Remove Items from Robot'
-      note "Remove item #{item} from the <b>#{robo_name}</b>"
-    end
+    "Remove item #{item} from the <b>#{model_and_name}</b>"
   end
 
   # Instructions for confirming the orientation of a plate in the instrument
   #
   # @return [String]
   def confirm_orientation
-    protocol.show do
-      title 'Confirm orientation'
-      warning 'MAKE SURE THAT THE PLATE IS IN THE CORRECT ORIENTATION'
-    end
+    'MAKE SURE THAT THE PLATE IS IN THE CORRECT ORIENTATION'
   end
 
   # Instructions for selecting the PCR program template
@@ -93,30 +84,20 @@ class AbstractRobot
   # @return [String]
   def select_program_template(program:)
     file = program_template_file(program: program)
-    protocol.show do
-      title 'Select Program Template'
-      note "Choose the program template <b>#{file}</b>"
-    end
+    "Choose the protocol <b>#{file}</b>"
   end
 
   # Instructions to follow robots onboard instructions
   #
   def follow_template_instructions
-    robo_name = model_and_name
-    protocol.show do
-      title 'Follow Machine Instructions'
-      note "Follow the the instructions on #{robo_name}"
-    end
+    "Follow the the instructions on #{model_and_name}"
   end
 
   # Instructions for starting the run
   #
   # @return [String]
   def start_run
-    protocol.show do
-      title 'Start Robot'
-      note 'Click the <b>Start Run</b> button'
-    end
+    'Click the <b>Start Run</b> button'
   end
 
   # Save run
@@ -124,23 +105,16 @@ class AbstractRobot
   # @param path [String] path to file
   # @param file_name [String] name of file
   def save_run(path:, file_name:)
-    ext = file_ext
-    protocol.show do
-      title 'Save Run'
-      note "Please save run at <b>#{path}#{file_name}#{ext}</b>"
-    end
+    "Please save run at <b>#{path}#{file_name}#{file_ext}</b>"
   end
 
   def export_measurement_files(path:, ext:, file_name:)
     ext ||= default_extension
-    protocol.show do
-      title 'Export Measurement Files'
-      note "Export files to <b>#{path}#{file_name}#{ext}</b>"
-    end
+    "Export files to <b>#{path}#{file_name}#{ext}</b>"
   end
 
   # TODO
-  def load_media(program: program)
+  def load_media
 
   end
 
@@ -154,8 +128,8 @@ class AbstractRobot
   # Image for selecting the PCR program template in the software
   #
   # @return [String]
-  def setup_program_image
-    image_path(image_name: params[:setup_program_image])
+  def setup_program_image(program:)
+    image_path(image_name: program.program_template_image)
   end
 
   # Image for starting the run
@@ -163,6 +137,13 @@ class AbstractRobot
   # @return [String]
   def start_run_image
     image_path(image_name: params[:start_run_image])
+  end
+
+  # Image for turning on
+  #
+  # @return [String]
+  def turn_on_image
+    image_path(image_name: params[:turn_on_image])
   end
 
   def check_supplies(items: nil, consumables: nil)
@@ -182,8 +163,8 @@ class AbstractRobot
 
   ########## Compatibility Methods
   # these probably should NOT be overridden in the concrete classes
-  def check_program(program)
-    compatible_programs.include? (program.name)
+  def check_program
+    compatible_programs.include? program.name
   end
 
   ########## Getter Methods
@@ -201,7 +182,7 @@ class AbstractRobot
   end
 
   def program_ext
-    self.class.const_get(:PROGRAM_EXT)
+    self.class.const_get(:PROGRAM_EXT).to_s
   end
 
   def compatible_export_ext
@@ -213,9 +194,9 @@ class AbstractRobot
   end
 
   def model_and_name
-    "#{model}-#{name}"
+    "<b>#{model}-#{name}</b>"
   end
-  
+
   private
 
   def check_samples(items:)
@@ -235,9 +216,9 @@ class AbstractRobot
 
   def check_consumables(consumables:)
     tab = Table.new(a: 'Sample Name', b: 'Min Quantity')
-    consumables.each do |consumables|
-      obj = consumables[:obj]
-      qty = consumables[:qty]
+    consumables.each do |cons|
+      obj = cons[:obj]
+      qty = cons[:qty]
       tab.a(obj).b(qty_display(qty)).append
     end
 
@@ -249,7 +230,7 @@ class AbstractRobot
   end
 
   def default_params
-    params = {
+    {
       experiment_filepath: '',
       export_filepath: '',
       image_path: '',
@@ -263,9 +244,8 @@ class AbstractRobot
   end
 
   def template_file(template_name:, extension:)
-    ext = self.class.const_get(extension)
     if extension.present?
-      (template_name + '.' + ext).gsub(/\.+/, '.')
+      (template_name + '.' + extension).gsub(/\.+/, '.')
     else
       template_name
     end

@@ -2,6 +2,8 @@
 
 needs 'Liquid Handling Robot/TestLiquidHandlingRobot'
 needs 'Liquid Handling Robot/QIASymphony'
+needs 'Liquid Handling Robot/Mosquito'
+needs 'Liquid Handling Robot/Dragonfly'
 needs 'Liquid Robot Helper/LiquidRobotProgram'
 needs 'Liquid Robot Helper/LiquidRobotConstants'
 
@@ -52,6 +54,10 @@ class LiquidRobotFactory
       case model
       when TestLiquidHandlingRobot::MODEL
         TestLiquidHandlingRobot.new(name: name, protocol: protocol)
+      when Mosquito::MODEL
+        Mosquito.new(protocol: protocol)
+      when Dragonfly::MODEL
+        Dragonfly.new(protocol: protocol)
       else
         msg = "Unrecognized Liquid Handling Robot Model: #{model}"
         raise LiquidRobotFactoryInputError, msg
