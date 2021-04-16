@@ -9,7 +9,7 @@ class LiquidRobotProgramFactory
     program = PROGRAMS[program_name]
 
     if program.nil?
-      msg = "Invalid program_name #{program_name}"
+      msg = "Invalid program_name: '#{program_name}''"
       raise InvalidProgramName, msg
     end
 

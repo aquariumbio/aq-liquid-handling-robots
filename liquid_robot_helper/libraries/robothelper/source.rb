@@ -4,13 +4,14 @@ needs 'Liquid Handling Robot/TestLiquidHandlingRobot'
 needs 'Liquid Handling Robot/QIASymphony'
 needs 'Liquid Handling Robot/Mosquito'
 needs 'Liquid Handling Robot/Dragonfly'
+needs 'Liquid Handling Robot/Biomek'
 needs 'Liquid Robot Helper/LiquidRobotProgram'
 needs 'Liquid Robot Helper/LiquidRobotConstants'
 
 module RobotHelper
 
   include LiquidRobotConstants
-  
+
   def check_robot_compatibility(input_object:, robot:, program: nil)
     if program
       return false unless robot.check_program(program)
@@ -27,8 +28,6 @@ module RobotHelper
       raise CompatibilityError, msg
     end
   end
-
-
 
   def check_collection_compatibility(input_collection:, robot:)
     true
@@ -58,6 +57,8 @@ class LiquidRobotFactory
         Mosquito.new(protocol: protocol)
       when Dragonfly::MODEL
         Dragonfly.new(protocol: protocol)
+      when Biomek::MODEL
+        Biomek.new(protocol: protocol)
       else
         msg = "Unrecognized Liquid Handling Robot Model: #{model}"
         raise LiquidRobotFactoryInputError, msg

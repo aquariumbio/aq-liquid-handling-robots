@@ -73,13 +73,21 @@ module LiquidRobotProgramDefinitions
       param: []
     },
 
+    '140 ul S-block Transfer' => {
+      program_template_name: '140 ul S-block Transfer',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: '140_ul_S-block_Transfer.png',
+      param: []
+    },
+
     ##### Dragon Typical Programs ####
 
     'EP3_HT' => {
-      program_template_name: 'EP3_HT',
+      program_template_name: 'PCR MM.drg',
       run_file_path: 'load -> CovidSeq File ->',
       export: nil,
-      program_image: 'EP3_HT.png',
+      program_image: 'EPH3_HT.drg.png',
       param: []
     },
 
@@ -139,7 +147,61 @@ module LiquidRobotProgramDefinitions
       param: []
     },
 
+    '96_to_384_sample' => {
+      program_template_name: '96 to 384 Sample Transfer',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: 'P96 to 384.png',
+      param: []
+    },
 
+    '96_to_384_index' => {
+      program_template_name: '96 to 384 Index Transfer',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: 'P96 to 384.png',
+      param: []
+    },
+
+    '560 ul Buffer Program' => {
+      program_template_name: '560 ul Buffer Program',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: '560 ul Buffer Program.png',
+      param: []
+    },
+
+    '630 ul Transfer Program' => {
+      program_template_name: '630 ul Transfer Program',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: '630 ul Transfer Program.png',
+      param: []
+    },
+
+    '500 ul Buffer Program' => {
+      program_template_name: '500 ul Buffer Program',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: '500 ul Buffer Program.png',
+      param: []
+    },
+
+    '250 ul Buffer Program' => {
+      program_template_name: '250 ul Buffer Program',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: '250 ul Buffer Program.png',
+      param: []
+    },
+
+    '80 ul Buffer Program' => {
+      program_template_name: '80 ul Buffer Program',
+      run_file_path: 'load -> CovidSeq File ->',
+      export: nil,
+      program_image: '80 ul Buffer Program.png',
+      param: []
+    }
 
   }
 
