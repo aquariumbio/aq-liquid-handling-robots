@@ -84,7 +84,7 @@ module LiquidRobotProgramDefinitions
     ##### Dragon Typical Programs ####
 
     'EP3_HT' => {
-      program_template_name: 'PCR MM.drg',
+      program_template_name: 'EP3_HT',
       run_file_path: 'load -> CovidSeq File ->',
       export: nil,
       program_image: 'EPH3_HT.drg.png',
